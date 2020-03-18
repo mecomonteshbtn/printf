@@ -1,0 +1,146 @@
+.\" Manpage for _printf().
+.TH man 8 "17 March 2020" "1.0" "_printf man page"
+.SH NAME
+printf() \- create a new LDAP user
+.SH SYNOPSIS
+_printf [Charliemur2, mecomonteshbtn]
+#include "holberton.h"
+.SH DESCRIPTION
+The functions _printf()  produce output according to a
+format specified. write the output under the control of a format
+string that specifies how subsequent arguments (or arguments accessed
+via the variable-length argument facilities.
+Format of the format string
+The format string is a character string, beginning and ending in its
+initial shift state, if any.  The format string is composed of zero
+or more directives: ordinary characters (not %), which are copied
+unchanged to the output stream; and conversion specifications, each
+of which results in fetching zero or more subsequent arguments.  Each
+conversion specification is introduced by the character %, and ends
+with a conversion specifier.  In between there may be (in this order)
+zero or more flags, an optional minimum field width, an optional
+precision and an optional length modifier.
+Conversion specifiers
+A character that specifies the type of conversion to be applied.  The
+conversion specifiers and their meanings are:
+
+       d, i   The int argument is converted to signed decimal notation.  The
+              precision, if any, gives the minimum number of digits that
+              must appear; if the converted value requires fewer digits, it
+              is padded on the left with zeros.  The default precision is 1.
+              When 0 is printed with an explicit precision 0, the output is
+              empty.
+
+       o, u, x, X
+              The unsigned int argument is converted to unsigned octal (o),
+              unsigned decimal (u), or unsigned hexadecimal (x and X) nota‐
+              tion.  The letters abcdef are used for x conversions; the let‐
+              ters ABCDEF are used for X conversions.  The precision, if
+              any, gives the minimum number of digits that must appear; if
+              the converted value requires fewer digits, it is padded on the
+              left with zeros.  The default precision is 1.  When 0 is
+              printed with an explicit precision 0, the output is empty.
+
+       e, E   The double argument is rounded and converted in the style
+              [-]d.ddde±dd where there is one digit (which is nonzero if the
+              argument is nonzero) before the decimal-point character and
+              the number of digits after it is equal to the precision; if
+              the precision is missing, it is taken as 6; if the precision
+              is zero, no decimal-point character appears.  An E conversion
+              uses the letter E (rather than e) to introduce the exponent.
+              The exponent always contains at least two digits; if the value
+              is zero, the exponent is 00.
+
+       f, F   The double argument is rounded and converted to decimal nota‐
+              tion in the style [-]ddd.ddd, where the number of digits after
+              the decimal-point character is equal to the precision specifi‐
+              cation.  If the precision is missing, it is taken as 6; if the
+              precision is explicitly zero, no decimal-point character
+              appears.  If a decimal point appears, at least one digit
+              appears before it.
+
+              (SUSv2 does not know about F and says that character string
+              representations for infinity and NaN may be made available.
+              SUSv3 adds a specification for F.  The C99 standard specifies
+              "[-]inf" or "[-]infinity" for infinity, and a string starting
+              with "nan" for NaN, in the case of f conversion, and "[-]INF"
+              or "[-]INFINITY" or "NAN" in the case of F conversion.)
+
+       g, G   The double argument is converted in style f or e (or F or E
+              for G conversions).  The precision specifies the number of
+              significant digits.  If the precision is missing, 6 digits are
+              given; if the precision is zero, it is treated as 1.  Style e
+              is used if the exponent from its conversion is less than -4 or
+              greater than or equal to the precision.  Trailing zeros are
+              removed from the fractional part of the result; a decimal
+              point appears only if it is followed by at least one digit.
+
+       a, A   (C99; not in SUSv2, but added in SUSv3) For a conversion, the
+              double argument is converted to hexadecimal notation (using
+              the letters abcdef) in the style [-]0xh.hhhhp±; for A conver‐
+              sion the prefix 0X, the letters ABCDEF, and the exponent sepa‐
+              rator P is used.  There is one hexadecimal digit before the
+              decimal point, and the number of digits after it is equal to
+              the precision.  The default precision suffices for an exact
+              representation of the value if an exact representation in base
+              2 exists and otherwise is sufficiently large to distinguish
+              values of type double.  The digit before the decimal point is
+              unspecified for nonnormalized numbers, and nonzero but other‐
+              wise unspecified for normalized numbers.
+
+       c      If no l modifier is present, the int argument is converted to
+              an unsigned char, and the resulting character is written.  If
+              an l modifier is present, the wint_t (wide character) argument
+              is converted to a multibyte sequence by a call to the
+              wcrtomb(3) function, with a conversion state starting in the
+              initial state, and the resulting multibyte string is written.
+
+       s      If no l modifier is present: the const char * argument is
+              expected to be a pointer to an array of character type
+              (pointer to a string).  Characters from the array are written
+              up to (but not including) a terminating null byte ('\0'); if a
+              precision is specified, no more than the number specified are
+              written.  If a precision is given, no null byte need be
+              present; if the precision is not specified, or is greater than
+              the size of the array, the array must contain a terminating
+              null byte.
+
+              If an l modifier is present: the const wchar_t * argument is
+              expected to be a pointer to an array of wide characters.  Wide
+              characters from the array are converted to multibyte charac‐
+              ters (each by a call to the wcrtomb(3) function, with a con‐
+              version state starting in the initial state before the first
+              wide character), up to and including a terminating null wide
+              character.  The resulting multibyte characters are written up
+              to (but not including) the terminating null byte.  If a preci‐
+              sion is specified, no more bytes than the number specified are
+              written, but no partial multibyte characters are written.
+              Note that the precision determines the number of bytes writ‐
+              ten, not the number of wide characters or screen positions.
+              The array must contain a terminating null wide character,
+              unless a precision is given and it is so small that the number
+              of bytes written exceeds it before the end of the array is
+              reached.
+
+       C      (Not in C99 or C11, but in SUSv2, SUSv3, and SUSv4.)  Synonym
+              for lc.  Don't use.
+
+       S      (Not in C99 or C11, but in SUSv2, SUSv3, and SUSv4.)  Synonym
+              for ls.  Don't use.
+
+       p      The void * pointer argument is printed in hexadecimal (as if
+              by %#x or %#lx).
+
+       %      A '%' is written.  No argument is converted.  The complete
+              conversion specification is '%%'.
+RETURN VALUE
+Upon successful return, these functions return the number of
+characters printed (excluding the null byte used to end output to
+strings).
+If an output error is encountered, a negative value is returned.
+.SH SEE ALSO
+printf(3).
+.SH BUGS
+No known bugs.
+.SH AUTHOR
+Charliemur2, mecomonteshbtn.
