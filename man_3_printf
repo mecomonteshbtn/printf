@@ -1,7 +1,7 @@
 .\" Manpage for _printf().
-.TH man 8 "17 March 2020" "1.0" "_printf man page"
+.TH man 3 "17 March 2020" "1.0" "_printf man page"
 .SH NAME
-printf() \- create a new LDAP user
+printf()
 .SH SYNOPSIS
 _printf [Charliemur2, mecomonteshbtn]
 #include "holberton.h"
@@ -128,12 +128,9 @@ conversion specifiers and their meanings are:
        S      (Not in C99 or C11, but in SUSv2, SUSv3, and SUSv4.)  Synonym
               for ls.  Don't use.
 
-       p      The void * pointer argument is printed in hexadecimal (as if
-              by %#x or %#lx).
-
        %      A '%' is written.  No argument is converted.  The complete
               conversion specification is '%%'.
-RETURN VALUE
+.SH RETURN VALUE
 Upon successful return, these functions return the number of
 characters printed (excluding the null byte used to end output to
 strings).
