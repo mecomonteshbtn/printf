@@ -1,10 +1,11 @@
 .\" Manpage for _printf().
 .TH man 8 "17 March 2020" "1.0" "_printf man page"
 .SH NAME
-printf() \- create a new LDAP user
+printf()
 .SH SYNOPSIS
-_printf [Charliemur2, mecomonteshbtn]
 #include "holberton.h"
+
+Use the function wuth the specifiers (c,s,i,d, etc) after the %. If no identifier is present then the function prints the literalu string.
 .SH DESCRIPTION
 The functions _printf()  produce output according to a
 format specified. write the output under the control of a format
@@ -133,7 +134,11 @@ conversion specifiers and their meanings are:
 
        %      A '%' is written.  No argument is converted.  The complete
               conversion specification is '%%'.
-RETURN VALUE
+.SH EXAMPLE
+#include "holberton.h"
+	 _printf("hello, %s", "people")
+	 output: hello, people
+.SH RETURN VALUE
 Upon successful return, these functions return the number of
 characters printed (excluding the null byte used to end output to
 strings).
